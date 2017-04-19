@@ -1,0 +1,56 @@
+<p>This is the partial for Pi Test.</p>
+<p>
+  WebSocket Status: {{ ctrl.wsData.connected }}
+  <form>
+    <div class="form-group">
+      <label>WebSocket Address:</label>
+      <input type="text" ng-model="ctrl.wsData.url" class="form-control"/>
+      <div class="form-group">
+        <button ng-click="ctrl.connect(ctrl.wsData.url)" class="btn form-control">Connect</button>
+        <button ng-click="ctrl.disconnect()" class="btn form-control">Disconnect</button>
+      </div>
+    </div>
+  </form>
+  <!-- <canvas video-player ng-if="ctrl.wsData.connected"></canvasvideo-player> -->
+  <video width="320" height="240" controls>
+    <source src="http://192.168.1.132:8081/" type="video/mp4"></video>
+  </video>
+  <table>
+    <tr>
+      <th>Pin</th>
+      <th>Mode</th>
+      <th>Function</th>
+      <th>Value</th>
+    </tr>
+    <tr ng-repeat="(pin, data) in ctrl.gpio_pins">
+      <td>{{pin}}</td>
+      <td>
+        <select style="width: 100%" ng-model="data.mode" ng-change="ctrl.setGpioMode(pin, data.mode)">
+          <option ng-repeat="option in ctrl.getPinModes()" value="{{option}}">{{option}}</option>
+        </select>
+      </td>
+      <td>
+        <select style="width: 100%" ng-model="ctrl.pin_states[pin].selectedFunction" ng-change="ctrl.functionChanged(pin)">
+          <option ng-repeat="option in ctrl.getPinFunctions()" value="{{option}}">{{option}}</option>
+        </select>
+      </td>
+      <td>
+        <div ng-switch="ctrl.pin_states[pin].selectedFunction">
+          <div ng-switch-when="Digital">
+            <button class="btn btn-primary" ng-disabled="!ctrl.wsData.connected" ng-if="data.digitalValue == 1" ng-click="ctrl.setDigitalValue(pin, 0)">On</button>
+            <button class="btn btn-danger" ng-disabled="!ctrl.wsData.connected" ng-if="data.digitalValue != 1" ng-click="ctrl.setDigitalValue(pin, 1)">Off</button>
+          </div>
+          <div ng-switch-when="PWM">
+            <input type="range" max="{{data.pwmRange}}" ng-disabled="!ctrl.wsData.connected" ng-model="data.pwmValue" ng-change="ctrl.setPwmValue(pin, data.pwmValue)"/>
+          </div>
+          <div ng-switch-when="Servo">
+            <button class="btn btn-primary" ng-disabled="!ctrl.wsData.connected" ng-if="data.servoEnabled" ng-click="data.servoValue=ctrl.servoMin;data.servoEnabled=false">On</button>
+            <button class="btn btn-danger" ng-disabled="!ctrl.wsData.connected" ng-if="!data.servoEnabled" ng-click="data.servoEnabled=true;data.servoValue=ctrl.servoMin">Off</button>
+            <input type="range" min="{{ctrl.servoMin}}" max="{{ctrl.servoMax}}" step="20" ng-model="data.servoValue" ng-change="ctrl.setServoValue(pin, data.servoValue)"/>
+            {{data.servoValue}}
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</p>
