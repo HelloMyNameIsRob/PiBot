@@ -104,18 +104,13 @@ angular.module('PiBot.PiTestView', ['ngRoute'])
       });
   };
 }])
-    .directive('videoPlayer', ['$location', function($location) {
-        return {
-            restrict: 'A',
-            link:function(scope, element, attr) {
-                var videoSocket = {
-                    connected: false,
-                    url: "ws://" + $location.host() + ":8082",
-                    canvas: element[0]
-                };
-
-                var player = new JSMpeg.Player(videoSocket.url, {canvas: videoSocket.canvas});
-
-            }
-        };
-    }]);
+.directive('videoPlayer', ['$location', function($location){
+    var player = null;
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var url = 'ws://' + $location.host() + ':8082/PiCam';
+            player = new JSMpeg.Player(url, {canvas: element[0], autoplay: true});
+        }
+    };
+}]);

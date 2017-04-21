@@ -7,12 +7,11 @@ const WebSocket = require('ws');
 const Gpio = require('pigpio').Gpio;
 const app = express();
 const GpioHelper = require('./GpioHelper');
-const PiCamStream = require('./PiCamStream');
+//const PiCamStream = require('./PiCamStream');
+const PiCamServer = require('./PiCamServer');
 
 const server = http.createServer(app);
 const wss = new WebSocket.Server({ server: server });
-
-const video_path = __dirname + '/PiVideo.h264';
 
 app.use('/PiBot', express.static('public/PiBotClient/app'));
 
@@ -105,7 +104,7 @@ var ws_actions = {
 server.listen(3000);
 console.log ("Listening on port 3000");
 
-PiCamStream.startServer();
+PiCamServer.start();
 
 wss.connectionCount = 0;
 wss.on('connection', function connection(ws) {
