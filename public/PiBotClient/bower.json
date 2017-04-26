@@ -11,6 +11,8 @@
     "angular-loader": "~1.5.0",
     "angular-mocks": "~1.5.0",
     "html5-boilerplate": "^5.3.0",
-    "jsmpeg": "https://github.com/phoboslab/jsmpeg.git"
+    "jsmpeg": "https://github.com/phoboslab/jsmpeg.git",
+    "angular-bootstrap": "^2.5.0",
+    "bootstrap": "^3.3.7"
   }
 }
