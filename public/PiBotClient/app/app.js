@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components
 angular.module('PiBot', [
   'ngRoute',
+  'ui.bootstrap',
   'PiBot.PiBotView',
   'PiBot.PiTestView',
   'PiBot.version',

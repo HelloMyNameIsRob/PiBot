@@ -1,1 +1,24 @@
-<p>This is the partial for PiBot view.</p>
+WebSocket Status: {{ ctrl.wsData.connected }}
+<div class="row">
+    <div class="col-sm-4" style="text-align:center;">
+        <i class="fa fa-chevron-circle-up" ng-mousedown="ctrl.setMotorDirection('Forward')" ng-mouseup="ctrl.setMotorDirection('Stop')" style="font-size:36px"></i><br><br>
+        <i class="fa fa-chevron-circle-left" ng-mousedown="ctrl.setMotorDirection('TurnLeft')" ng-mouseup="ctrl.setMotorDirection('Stop')" style="font-size:36px"></i>
+        <i class="glyphicon glyphicon-stop" ng-mousedown="ctrl.setMotorDirection('Stop')" ng-mouseup="ctrl.setMotorDirection('Stop')" style="font-size:36px"></i>
+        <i class="fa fa-chevron-circle-right" ng-mousedown="ctrl.setMotorDirection('TurnRight')" ng-mouseup="ctrl.setMotorDirection('Stop')" style="font-size:36px"></i><br><br>
+        <i class="fa fa-chevron-circle-down" ng-mousedown="ctrl.setMotorDirection('Reverse')" ng-mouseup="ctrl.setMotorDirection('Stop')" style="font-size:36px"></i><br>
+        <label for="speed">Speed:</label>
+        <input id="speed" type="range" max="255" ng-disabled="!ctrl.wsData.connected" ng-model="ctrl.motorState.left_speed" ng-change="ctrl.setMotorState(ctrl.motorState)"/>
+    </div>
+    <div class="col-sm-4">
+        <!-- <mjpeg-player></mjpeg-player> -->
+        <img src="/PiBot/stream">
+    </div>
+    <div class="col-sm-4">
+        <p>Servo Control: </p>
+        <button class="btn btn-success" ng-if="ctrl.servosEnabled" ng-click="ctrl.setServosEnabled(false)">On</button>
+        <button class="btn btn-warning" ng-if="!ctrl.servosEnabled" ng-click="ctrl.setServosEnabled(true)">Off</button>
+        <br>
+        <input id="tilt" style="-webkit-appearance: slider-vertical;" type="range" min="{{ctrl.servoMin}}" max="{{ctrl.servoMax}}" ng-disabled="!ctrl.wsData.connected || !ctrl.servosEnabled" ng-model="ctrl.tiltValue" ng-change="ctrl.setTilt(ctrl.tiltValue)"/><br>
+        <input id="pan" type="range" min="{{ctrl.servoMin}}" max="{{ctrl.servoMax}}" step="10" ng-disabled="!ctrl.wsData.connected || !ctrl.servosEnabled" ng-model="ctrl.panValue" ng-change="ctrl.setPan(ctrl.panValue)"/>
+    </div>
+</div>

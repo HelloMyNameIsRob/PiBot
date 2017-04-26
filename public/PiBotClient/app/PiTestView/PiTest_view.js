@@ -10,7 +10,7 @@ angular.module('PiBot.PiTestView', ['ngRoute'])
   });
 }])
 
-.controller('PiTestCtrl', ['$scope', '$location', '$document', 'PiSocket', function($scope, $location, $document, PiSocket) {
+.controller('PiTestCtrl', ['$scope', '$location', 'PiSocket', function($scope, $location, PiSocket) {
   this.wsData = {
       connected: false,
       url: "ws://" + $location.host() + ":" + $location.port() + "/pibot/socket"

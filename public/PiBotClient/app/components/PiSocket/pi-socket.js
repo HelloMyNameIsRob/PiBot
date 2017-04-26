@@ -52,6 +52,13 @@ angular.module('PiBot.PiSocket', [])
             return currentCallbackId;
         }
 
+        Service.Directions = [
+            'Stop',
+            'Forward',
+            'Reverse',
+            'TurnRight',
+            'TurnLeft'
+        ];
         // Define a "getter" for getting status
         Service.getGpioData = function () {
             var request = {
@@ -86,7 +93,7 @@ angular.module('PiBot.PiSocket', [])
                     pin: pin,
                     value: value
                 }
-            }
+            };
             return sendRequest(request);
         };
         Service.setServoValue = function (pin, value) {
@@ -96,7 +103,18 @@ angular.module('PiBot.PiSocket', [])
                     pin: pin,
                     value: value
                 }
-            }
+            };
+            return sendRequest(request);
+        };
+        Service.setMotorState = function(left_speed, right_speed, direction) {
+            var request = {
+                action: "set_motor_state",
+                data: {
+                    left_speed: left_speed,
+                    right_speed: right_speed,
+                    direction: direction
+                }
+            };
             return sendRequest(request);
         };
 

@@ -9,8 +9,12 @@
   "author": "Rob Savidge",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.3.0",
+    "bean-sdk": "^0.6.2",
+    "chokidar": "^1.6.1",
     "express": "^4.15.2",
     "pigpio": "^0.4.0",
+    "pubsub-js": "^1.5.6",
     "ws": "^2.2.3"
   }
 }
